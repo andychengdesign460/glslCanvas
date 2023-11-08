@@ -127,10 +127,11 @@ void main() {
     vec2 uv = gl_FragCoord.xy/u_resolution.xy;
     uv= uv*2.0-1.0;
     uv.x *= u_resolution.x/u_resolution.y;
-
+    
+    
     vec2 mouse=u_mouse/u_resolution.xy;
-    mouse.x*= u_resolution.x/u_resolution.y;
     mouse=mouse*2.0-1.0;
+    mouse.x*= u_resolution.x/u_resolution.y;
     
    
      //互動陰晴圓缺
@@ -154,7 +155,7 @@ void main() {
     //定義圓環                
     float noise_position= interact;
     float radius_noise=noise(vec3(4.892*uv,u_time*0.388+index))*0.280*noise_position;
-    float radius=0.572+radius_noise;
+    float radius=0.57+radius_noise;
     float circle_dist = circle(uv, radius);  
         
     //float dist = length(uv);
@@ -164,6 +165,7 @@ void main() {
     vec2 uv_flip= vec2(uv.x,-uv.y);
     float star_noise=noise(vec3(4.892*uv,u_time*0.6+index))*.3*noise_position;
     float model_dist = abs(sdStar5(uv,.56,.4)+star_noise);
+    float model_dist_2 = abs(sdStar5(uv_flip,.56,.4)+star_noise);
     //float model_dist_2= abs(sdHexagram( uv-.5-noise, .05)+noise);
     
     //動態呼吸
@@ -172,7 +174,7 @@ void main() {
     //float strength =(0.2*breathing*dir+0.180);			//[0.2~0.3]			//光暈強度加上動態時間營造呼吸感
     float strength =(0.003*breathing+0.1);			//[0.2~0.3]			//光暈強度加上動態時間營造呼吸感
     float thickness=(0.001*breathing+0.06);			//[0.1~0.2]			//光環厚度 營造呼吸感
-    float glow_circle = glow(circle_dist*model_dist, strength*.8, thickness*.6);
+    float glow_circle = glow(circle_dist*model_dist*model_dist_2, strength*.8, thickness*.6);
     float glow_star= glow(model_dist, strength, thickness);
     //float glow_star_2= glow(model_dist_2, strength, thickness);
         
