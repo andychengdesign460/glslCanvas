@@ -143,7 +143,7 @@ void main() {
     float result;
     float result_2;
 
-    for (float index=0.;index<15.;++index){
+    for (float index=0.;index<20.;++index){
     
     //定義noise 
     //float freq=float(index);
