@@ -2,6 +2,7 @@
 // Title:BreathingGlow
 #ifdef GL_ES
 precision mediump float;
+#define PI 3.14159265359
 #endif
 
 uniform vec2 u_resolution;
@@ -121,6 +122,13 @@ float mouseEffect(vec2 uv, vec2 mouse, float size)
 }
 
 
+mat2 rotate2d(float _angle){
+    return mat2(cos(_angle),-sin(_angle),
+                sin(_angle),cos(_angle));
+}
+
+
+
 
 
 void main() {
@@ -133,6 +141,10 @@ void main() {
     mouse=(mouse*2.0-1.0)*.3;
     mouse.x*= u_resolution.x/u_resolution.y;
     
+    
+    
+    
+    
    
      //互動陰晴圓缺
     float interact=1.-mouseEffect(uv,mouse,0.35);
@@ -143,9 +155,21 @@ void main() {
     
     float result;
     float result_2;
+    
 
     for (float index=0.;index<20.;++index){
     
+        
+            
+    //旋轉  
+    mouse = rotate2d( sin(u_time)*.05*PI ) * mouse;
+    uv = rotate2d( sin(u_time)*.05*PI ) * uv;
+   
+
+        
+        
+        
+        
     //定義noise 
     //float freq=float(index);
     //float weight= smoothstep(.5,.05,uv.y);
@@ -154,7 +178,7 @@ void main() {
 
     //定義圓環                
     float noise_position= interact;
-    float radius_noise=noise(vec3(4.892*uv,u_time*0.388+index))*0.280*noise_position;
+    float radius_noise=noise(vec3(4.*uv,u_time*0.388+index))*0.7*noise_position;
     float radius=0.57+radius_noise;
     float circle_dist = circle(uv+mouse, radius);  
         
@@ -168,7 +192,9 @@ void main() {
     float model_dist = abs(sdStar5(uv+mouse,.56,.4)+star_noise);
     float model_dist_2 = abs(sdStar5(uv_flip+mouse_flip,.56,.4)+star_noise);
     //float model_dist_2= abs(sdHexagram( uv-.5-noise, .05)+noise);
-    
+
+        
+        
     //動態呼吸
     //float breathing=sin(u_time*2.0*pi/4.0)*0.5+0.5;						//option1
     float breathing=(exp(sin(u_time/2.0*pi)) - 0.36787944)*0.42545906412; 			//option2 正確
@@ -183,7 +209,13 @@ void main() {
         
     }
         
+    
+   
+    
+    
     gl_FragColor = vec4(vec3(result)*vec3(sin(u_time/2.0*pi),0.694,0.436),1.0);
     //gl_FragColor = vec4(vec3(info),1.0);
     
 }
+
+
