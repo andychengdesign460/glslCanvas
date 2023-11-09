@@ -162,8 +162,8 @@ void main() {
         
             
     //旋轉  
-    mouse = rotate2d( sin(u_time)*.05*PI ) * mouse;
-    uv = rotate2d( sin(u_time)*.05*PI ) * uv;
+    mouse = rotate2d( sin(u_time)*.03*PI ) * mouse;
+    uv = rotate2d( sin(u_time)*.03*PI ) * uv;
    
 
         
@@ -185,13 +185,16 @@ void main() {
     //float dist = length(uv);
     //float circle_dist = abs(dist-0.6+noise_2*.1);								//光環大小
     
+    float eye=sin(u_time)*0.2+.3;
+        
     //定義星
     vec2 uv_flip= vec2(uv.x,-uv.y);
     vec2 mouse_flip= vec2(mouse.x,-mouse.y);
     float star_noise=noise(vec3(4.892*uv,u_time*0.6+index))*.3*noise_position;
-    float model_dist = abs(sdStar5(uv+mouse,.56,.4)+star_noise);
-    float model_dist_2 = abs(sdStar5(uv_flip+mouse_flip,.56,.4)+star_noise);
+    float model_dist = abs(sdStar5(uv+mouse,0.56,eye)+star_noise);
+    float model_dist_2 = abs(sdStar5(uv_flip+mouse_flip,.56,eye)+star_noise);
     //float model_dist_2= abs(sdHexagram( uv-.5-noise, .05)+noise);
+
 
         
         
