@@ -111,12 +111,9 @@ meter {
 
 
 
-*{
-    cursor:url('apple.png'), auto;
-}
 
 body {
-
+     cursor:URL("apple.png"), auto;
     background: #101515;
 }
 #glslCanvas {
